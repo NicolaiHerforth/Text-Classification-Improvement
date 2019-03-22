@@ -2,7 +2,7 @@ import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 
-def file_to_one_hot(data, test_data = None):
+def file_to_one_hot(data, test_data):
     corpus = set()
     data['summary'].apply(corpus.update)
     data['reviewText'].apply(corpus.update)
