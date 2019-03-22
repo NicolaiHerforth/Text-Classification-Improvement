@@ -1,4 +1,10 @@
 # Group 2 exam project.
+<<<<<<< HEAD
+<<<<<<< HEAD
+Pull the repository and read up on branching so we avoid push/pull issues throughout the project! NEVER WORK ON THE SAME FILES CONCURRENTLY.
+=======
+=======
+>>>>>>> origin/branch-guide-in-readme
 ## YOU CANNOT PUSH TO THE MASTER BRANCH, YOU HAVE TO MAKE YOUR OWN BRANCH FOR WHATEVER FEATURE YOU'RE WORKING ON, AND MERGE WHEN YOUR WORK IS DONE. SEE GUIDE BELOW.
 
 ## Branching Guide:
@@ -53,4 +59,8 @@ If no complications come up, they should be ready for a Pull Request on the GitH
 
 When this is done, the master branch will now be updated with whatever feature you're working on. 
 Please make sure you're NOT working on the same feature as someone else, or complications will arise.
+<<<<<<< HEAD
+>>>>>>> c79524148d403e8e122433ebff4524836dc731a6
+=======
+>>>>>>> origin/branch-guide-in-readme
 
