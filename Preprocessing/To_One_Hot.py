@@ -26,12 +26,11 @@ def file_to_one_hot(data, test_data = None):
                 l[i] = words_to_indices[l[i]]
         return l
 
-    if test_data != None:
-        test_data['summary'] = test_data['summary'].apply(convert_list_to_ints_for_test)
-        test_data['reviewText'] = test_data['reviewText'].apply(convert_list_to_ints_for_test)
 
+    test_data['summary'] = test_data['summary'].apply(convert_list_to_ints_for_test)
+    test_data['reviewText'] = test_data['reviewText'].apply(convert_list_to_ints_for_test)
 
     data['summary'] = data['summary'].apply(convert_list_to_ints)
     data['reviewText'] = data['reviewText'].apply(convert_list_to_ints)
 
-    return data
+    return data, test_data
