@@ -18,8 +18,8 @@ def file_to_one_hot(data, test_data):
     def convert_list_to_ints(l):
         for i in range(len(l)):
             l[i] = words_to_indices[l[i]]
-        while l != max_list_length:
-            l.append(len(corpus)+1)
+        l = l + [len(corpus)] * (len(corpus) - len(l))
+
         return l
 
     def convert_list_to_ints_for_test(l):
@@ -28,8 +28,9 @@ def file_to_one_hot(data, test_data):
                 l[i] = len(corpus)
             else:
                 l[i] = words_to_indices[l[i]]
-        while l != max_list_length:
-            l.append(len(corpus)+1)
+
+        l = l + [len(corpus)] * (len(corpus) - len(l))
+
         return l
 
 
