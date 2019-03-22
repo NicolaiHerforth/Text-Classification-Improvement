@@ -2,7 +2,7 @@ import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 
-def file_to_one_hot(data):
+def file_to_one_hot(data, test_data):
     corpus = set()
     data['summary'].apply(corpus.update)
     data['reviewText'].apply(corpus.update)
@@ -21,9 +21,6 @@ def file_to_one_hot(data):
         while l != max_list_length:
             l.append(len(corpus)+1)
         return l
-<<<<<<< HEAD
-    print('part3')
-=======
 
     def convert_list_to_ints_for_test(l):
         for i in range(len(l)):
@@ -38,9 +35,8 @@ def file_to_one_hot(data):
 
     test_data['summary'] = test_data['summary'].apply(convert_list_to_ints_for_test)
     test_data['reviewText'] = test_data['reviewText'].apply(convert_list_to_ints_for_test)
->>>>>>> a52d8dfe7cf970ccf286e430927a3c55e04c34eb
 
     data['summary'] = data['summary'].apply(convert_list_to_ints)
     data['reviewText'] = data['reviewText'].apply(convert_list_to_ints)
-    print('part4')
-    return data
+
+    return data, test_data
