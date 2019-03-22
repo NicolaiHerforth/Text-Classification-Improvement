@@ -12,10 +12,14 @@ def file_to_one_hot(data, test_data):
     words_to_indices = dict()
     for i, word in enumerate(sorted(corpus)):
         words_to_indices[word] = i
+    max_list_length = max([len(max(data['summary'].values(), key=len)),len(max(data['reviewText'].values(), key=len))])
+
 
     def convert_list_to_ints(l):
         for i in range(len(l)):
             l[i] = words_to_indices[l[i]]
+        while l != max_list_length:
+            l.append(len(corpus)+1)
         return l
 
     def convert_list_to_ints_for_test(l):
@@ -24,6 +28,8 @@ def file_to_one_hot(data, test_data):
                 l[i] = len(corpus)
             else:
                 l[i] = words_to_indices[l[i]]
+        while l != max_list_length:
+            l.append(len(corpus)+1)
         return l
 
 
