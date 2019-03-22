@@ -2,12 +2,6 @@ import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 
-data = pd.read_csv('../phase1_movie_reviews-train.csv')
-data["summary"] = data["summary"].astype(str)
-data['reviewText'] = data['reviewText'].astype(str)
-data['summary'] = data['summary'].apply(text_to_word_sequence).astype(set)
-data['reviewText'] = data['reviewText'].apply(text_to_word_sequence).astype(set)
-
 def file_to_one_hot(data):
     corpus = set()
     data['summary'].apply(corpus.update)
