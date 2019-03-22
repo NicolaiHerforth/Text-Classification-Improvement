@@ -1,3 +1,6 @@
 .ipynb_checkpoints/Untitled-checkpoint.ipynb
 phase1_movie_reviews-train.zip
 phase1_movie_reviews-train.csv
+.DS_Store
+Preprocessing/.ipynb_checkpoints/
+.ipynb_checkpoints/
