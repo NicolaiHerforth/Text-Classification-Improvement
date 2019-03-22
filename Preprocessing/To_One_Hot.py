@@ -2,7 +2,7 @@ import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 
-def file_to_one_hot(data):
+def file_to_one_hot(data, test_data = None):
     corpus = set()
     data['summary'].apply(corpus.update)
     data['reviewText'].apply(corpus.update)
@@ -17,9 +17,21 @@ def file_to_one_hot(data):
         for i in range(len(l)):
             l[i] = words_to_indices[l[i]]
         return l
-    print('part3')
+
+    def convert_list_to_ints_for_test(l):
+        for i in range(len(l)):
+            if l[i] not in corpus:
+                l[i] = len(corpus)
+            else:
+                l[i] = words_to_indices[l[i]]
+        return l
+
+    if test_data != None:
+        test_data['summary'] = test_data['summary'].apply(convert_list_to_ints_for_test)
+        test_data['reviewText'] = test_data['reviewText'].apply(convert_list_to_ints_for_test)
+
 
     data['summary'] = data['summary'].apply(convert_list_to_ints)
     data['reviewText'] = data['reviewText'].apply(convert_list_to_ints)
-    print('part4')
+
     return data
