@@ -31,7 +31,7 @@ def file_to_one_hot(data, corpus, test = False):
     def convert_list_to_ints_for_test(l):
         for i in range(len(l)):
             if l[i] not in corpus:
-                l[i] = len(corpus)
+                l[i] = len(corpus) + 1
             else:
                 l[i] = words_to_indices[l[i]]
 
