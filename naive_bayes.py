@@ -1,9 +1,20 @@
 import Preprocessing.To_One_Hot as one_hot
 from Preprocessing.data_format import formatting
 from sklearn.naive_bayes import MultinomialNB
-data = formatting('phase1_movie_reviews-train.csv')
+
+
+data = formatting('phase1_movie_reviews-train.csv', prune = True)
+data = data[:round(len(data)/10)]
+print(data)
 print('\t Converting data to dense OneHot encoding')
-oh_data, datatatata = one_hot.file_to_one_hot(data, data)
+corpus = one_hot.get_corpus(data)
+
+print(len(corpus))
+
+train_data = one_hot.file_to_one_hot(data, corpus)
+
+test_data = one_hot.file_to_one_hot(data, corpus, test = True)
+
 print('\t Converted! ')
 training = oh_data[:round(len(oh_data)*.8)]
 validation = oh_data[round(len(oh_data)*.8):]
