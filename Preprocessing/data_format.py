@@ -26,4 +26,3 @@ def formatting(path, prune = False):
         
     return data
 
-
