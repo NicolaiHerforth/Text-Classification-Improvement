@@ -4,7 +4,6 @@ from sklearn.naive_bayes import MultinomialNB
 
 
 data = formatting('phase1_movie_reviews-train.csv', prune = True)
-data = data[:round(len(data)/10)]
 print(data)
 print('\t Converting data to dense OneHot encoding')
 corpus = one_hot.get_corpus(data)
