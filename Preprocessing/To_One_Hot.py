@@ -17,7 +17,7 @@ def file_to_one_hot(data, corpus, test = False):
 
     for i, word in enumerate(sorted(corpus)):
 
-        words_to_indices[word] = i
+        words_to_indices[word] = i + 1
 
     max_list_length = max([len(max(data['summary'].values, key=len)),len(max(data['reviewText'].values, key=len))])
 
@@ -35,7 +35,7 @@ def file_to_one_hot(data, corpus, test = False):
             else:
                 l[i] = words_to_indices[l[i]]
 
-        l = l + [len(corpus)] * (max_list_length - len(l))
+        l = l + [0] * (max_list_length - len(l))
         return l
     tqdm.pandas()
     if test:
