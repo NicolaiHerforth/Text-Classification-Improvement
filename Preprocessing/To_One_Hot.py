@@ -21,29 +21,20 @@ def file_to_one_hot(data, corpus, test = False):
 
     max_list_length = max([len(max(data['summary'].values, key=len)),len(max(data['reviewText'].values, key=len))])
 
-    def convert_list_to_ints(l):
-        for i in range(len(l)):
-            l[i] = words_to_indices[l[i]]
-        l = l + [len(corpus)] * (max_list_length - len(l))
 
-        return l
 
-    def convert_list_to_ints_for_test(l):
+    def convert_list_to_ints_and_pad(l):
         for i in range(len(l)):
             if l[i] not in corpus:
                 l[i] = len(corpus) + 1
             else:
                 l[i] = words_to_indices[l[i]]
 
-        l = l + [0] * (max_list_length - len(l))
+        l = [0] * (max_list_length - len(l)) + l
         return l
-    tqdm.pandas()
-    if test:
 
-        data['summary'] = data['summary'].progress_apply(convert_list_to_ints_for_test)
-        data['reviewText'] = data['reviewText'].progress_apply(convert_list_to_ints_for_test)
-    else:
-        data['summary'] = data['summary'].progress_apply(convert_list_to_ints)
-        data['reviewText'] = data['reviewText'].progress_apply(convert_list_to_ints)
+    tqdm.pandas()
+    data['summary'] = data['summary'].progress_apply(convert_list_to_ints_and_pad)
+    data['reviewText'] = data['reviewText'].progress_apply(convert_list_to_ints_and_pad)
 
     return data
