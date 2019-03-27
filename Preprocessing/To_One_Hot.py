@@ -30,7 +30,7 @@ def file_to_one_hot(data, corpus, test = False):
             else:
                 l[i] = words_to_indices[l[i]]
 
-        l = [0] * (max_list_length - len(l)) + l
+        #l = [0] * (max_list_length - len(l)) + l
         return l
 
     tqdm.pandas()
