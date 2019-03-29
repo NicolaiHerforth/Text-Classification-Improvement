@@ -37,10 +37,15 @@ most_common = counter.most_common(1)
 most_common = most_common[0][0]
 print(most_common)
 
-#y_base = (*len(y_train))
+y_base = ([most_common]*len(y_train))
+
+print(y_base)
 
 print('Len y_train : ' + str(len(y_train)))
-#print('Len y_base : ' + str(len(y_base)))
+print('Len y_base : ' + str(len(y_base)))
+
 
 #print(collections.Counter(y_base))
+
+
 
