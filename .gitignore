@@ -4,5 +4,10 @@ phase1_movie_reviews-train.csv
 .DS_Store
 Preprocessing/.ipynb_checkpoints/
 .ipynb_checkpoints/
+<<<<<<< HEAD
 __pycache__
 Preprocessing/__pycache__
+=======
+__pycache__/
+Preprocessing/__pycache__/
+>>>>>>> e6e7381676ac8ca40a81d8c98ab312b545235232
