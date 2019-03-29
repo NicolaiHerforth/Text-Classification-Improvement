@@ -48,6 +48,3 @@ class WordEmbedding:
     def to_pd(self, data):
         feature_matrix = self._averaged_word_vectorizer(data, self.model, self.num_features)
         return pd.DataFrame(feature_matrix)
-    
-    def to_file(self):
-        self.model.wv.save_word2vec_format('trained_embedding_word2vec.txt', binary = False)
