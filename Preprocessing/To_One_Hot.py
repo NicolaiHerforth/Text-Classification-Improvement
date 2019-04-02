@@ -17,7 +17,7 @@ def file_to_one_hot(data, corpus, pad_size = 111, test = None):
     words_to_indices = dict()
     count = 0
     for word in sorted(corpus):
-        if corpus[word] > 12:
+        if corpus[word] > 30:
             words_to_indices[word] = count
             count += 1
 
