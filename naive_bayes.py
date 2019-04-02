@@ -3,6 +3,7 @@ from Preprocessing.data_format import formatting
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
 import numpy as np
+import pandas as pd
 
 data = formatting('phase1_movie_reviews-train.csv', prune = True)
 data = data.sample(frac=1, random_state=1).reset_index(drop=True)
@@ -57,6 +58,7 @@ y_game = game_data['polarity'].values
 movie_pred = clf.predict(list(X_movie))
 game_pred = clf.predict(list(X_game))
 print('Exporting hidden game and movie predictions')
-np.savetxt("movie_hidden.csv", movie_pred, delimiter=",")
-np.savetxt("game_hidden.csv", game_pred, delimiter=",")
+
+pd.DataFrame(movie_pred).to_csv("gr2_movie_pred.csv")
+pd.DataFrame(game_pred).to_csv("gr2_game_pred.csv")
 print('Exported!')
