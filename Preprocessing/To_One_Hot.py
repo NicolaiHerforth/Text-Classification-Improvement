@@ -25,7 +25,7 @@ def file_to_one_hot(data, corpus, pad_size = 111, test = None):
         ll = len(corpus) * [0]
 
         for i in l:
-            if i not in corpus or corpus[i] < 10:
+            if i not in corpus or corpus[i] < 30:
                 continue
             else:
                 ll[words_to_indices[i]] = 1
