@@ -38,3 +38,20 @@ print('  ',metrics.accuracy_score(y_train, y_train_pred))
 
 print('Validation Accuracy')
 print('  ',metrics.accuracy_score(y_val, y_val_pred))
+
+
+movie_data = one_hot.file_to_one_hot(movie_data, corpus, pad_size= padding)
+game_data = one_hot.file_to_one_hot(game_data, corpus, test = True, pad_size= padding)
+
+X_movie = movie_data['reviewText'].values
+y_movie = movie_data['polarity'].values
+
+X_game = game_data['reviewText'].values
+y_game = game_data['polarity'].values
+
+movie_pred = clf.predict(list(X_movie))
+game_pred = clf.predict(list(X_game))
+
+
+print('Movie Accuracy')
+print('  ',metrics.accuracy_score(y_movie, movie_pred))
