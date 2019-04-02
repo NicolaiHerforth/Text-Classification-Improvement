@@ -16,29 +16,19 @@ def file_to_one_hot(data, corpus, pad_size = 111, test = None):
     #data['reviewText'].apply(corpus.update)
     words_to_indices = dict()
 
-
     for i, word in enumerate(sorted(corpus)):
-        words_to_indices[word] = i + 1
+        words_to_indices[word] = i
 
-    
-    def convert_list_to_ints(l):
-        for i in range(len(l)):
-            if i == pad_size:
-                break
-            l[i] = words_to_indices[l[i]]
-        return l
 
     def convert_list_to_ints_for_test(l):
-        ll = []
-        for i in range(len(l)):
-            if i == pad_size:
-                break
-            if l[i] not in corpus:
-                ll.append(len(corpus))
-            else:
-                ll.append(words_to_indices[l[i]])
+        ll = len(corpus) * [0]
 
-        ll = (pad_size - len(ll)) * [0] + ll
+        for i in l:
+            if i not in corpus:
+                continue
+            else:
+                ll[words_to_indices[i]] = 1
+
         return ll
 
 
