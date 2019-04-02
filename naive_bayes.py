@@ -6,7 +6,7 @@ import numpy as np
 
 data = formatting('phase1_movie_reviews-train.csv', prune = True)
 data = data.sample(frac=1, random_state=1).reset_index(drop=True)
-data = data[round(len(data)*.05):]
+
 train_data = data[:round(len(data)*.8)]
 val_data = data[round(len(data)*.8):]
 
@@ -56,6 +56,7 @@ y_game = game_data['polarity'].values
 
 movie_pred = clf.predict(list(X_movie))
 game_pred = clf.predict(list(X_game))
-
+print('Exporting hidden game and movie predictions')
 np.savetxt("movie_hidden.csv", movie_pred, delimiter=",")
 np.savetxt("game_hidden.csv", game_pred, delimiter=",")
+print('Exported!')
