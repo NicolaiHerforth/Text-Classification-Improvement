@@ -2,6 +2,7 @@ import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 from nltk.corpus import stopwords
+import numpy as np
 
 def formatting(path, prune = False):
     data = pd.read_csv(path)
