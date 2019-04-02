@@ -4,9 +4,10 @@ from collections import Counter
 
 
 def get_corpus(train_data):
-    corpus = set()
+    corpus = Counter()
     #train_data['summary'].apply(corpus.update)
     train_data['reviewText'].apply(corpus.update)
+
     return corpus
 
     
@@ -24,7 +25,7 @@ def file_to_one_hot(data, corpus, pad_size = 111, test = None):
         ll = len(corpus) * [0]
 
         for i in l:
-            if i not in corpus:
+            if i not in corpus or corpus[i] < 10:
                 continue
             else:
                 ll[words_to_indices[i]] = 1
