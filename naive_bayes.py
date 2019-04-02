@@ -40,6 +40,9 @@ print('Validation Accuracy')
 print('  ',metrics.accuracy_score(y_val, y_val_pred))
 
 
+movie_data = formatting('phase1_movie_reviews-test-hidden.csv', prune = True)
+game_data = formatting('phase1_video_games-test-hidden.csv', prune = True)
+
 movie_data = one_hot.file_to_one_hot(movie_data, corpus, pad_size= padding)
 game_data = one_hot.file_to_one_hot(game_data, corpus, test = True, pad_size= padding)
 
