@@ -2,9 +2,11 @@ import Preprocessing.To_One_Hot as one_hot
 from Preprocessing.data_format import formatting
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
+import numpy as np
 
 data = formatting('phase1_movie_reviews-train.csv', prune = True)
 data = data.sample(frac=1, random_state=1).reset_index(drop=True)
+data = data[round(len(data)*.05):]
 train_data = data[:round(len(data)*.8)]
 val_data = data[round(len(data)*.8):]
 
@@ -55,6 +57,5 @@ y_game = game_data['polarity'].values
 movie_pred = clf.predict(list(X_movie))
 game_pred = clf.predict(list(X_game))
 
-
-print('Movie Accuracy')
-print('  ',metrics.accuracy_score(y_movie, movie_pred))
+np.savetxt("movie_hidden.csv", movie_pred, delimiter=",")
+np.savetxt("game_hidden.csv", game_pred, delimiter=",")
