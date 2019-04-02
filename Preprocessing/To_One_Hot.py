@@ -1,4 +1,3 @@
-
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 
@@ -16,16 +15,18 @@ def file_to_one_hot(data, corpus, pad_size = 111, test = None):
     #data['summary'].apply(corpus.update)
     #data['reviewText'].apply(corpus.update)
     words_to_indices = dict()
-
-    for i, word in enumerate(sorted(corpus)):
-        words_to_indices[word] = i
+    count = 0
+    for word in sorted(corpus):
+        if corpus[word] > 10:
+            words_to_indices[word] = count
+            count += 1
 
 
     def convert_list_to_ints_for_test(l):
-        ll = len(corpus) * [0]
+        ll = len(words_to_indices) * [0]
 
         for i in l:
-            if i not in corpus or corpus[i] < 30:
+            if i not in words_to_indices:
                 continue
             else:
                 ll[words_to_indices[i]] = 1
