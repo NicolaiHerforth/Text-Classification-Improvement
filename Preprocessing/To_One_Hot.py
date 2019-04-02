@@ -48,6 +48,7 @@ def file_to_one_hot(data, corpus, pad_size = 111, test = None):
     return data
 
 '''
+
 import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing import sequence
@@ -98,5 +99,5 @@ def file_to_one_hot(train, test, corpus, pad_length = 111):
     test_data = sequence.pad_sequences(test_data, maxlen = pad_length)
 
     return train_data, test_data
-    '''
+
 '''
