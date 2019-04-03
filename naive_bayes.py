@@ -52,22 +52,35 @@ print('  ',metrics.accuracy_score(y_val, y_val_pred))
 print('Test Accuracy')
 print('  ',metrics.accuracy_score(y_test, y_test_pred))
 
-# movie_data = formatting('phase1_movie_reviews-test-hidden.csv', prune = True)
-# game_data = formatting('phase1_video_games-test-hidden.csv', prune = True)
+movie_data = formatting('phase1_movie_reviews-test-hidden.csv', prune = True)
+game_data = formatting('phase1_video_games-test-hidden.csv', prune = True)
 
-# movie_data = one_hot.file_to_one_hot(movie_data, corpus, test = True)
-# game_data = one_hot.file_to_one_hot(game_data, corpus, test = True)
+movie_data = one_hot.file_to_one_hot(movie_data, corpus, test = True)
+game_data = one_hot.file_to_one_hot(game_data, corpus, test = True)
 
-# X_movie = movie_data['reviewText'].values
-# y_movie = movie_data['polarity'].values
+X_movie = movie_data['reviewText'].values
+y_movie = movie_data['polarity'].values
 
-# X_game = game_data['reviewText'].values
-# y_game = game_data['polarity'].values
+X_game = game_data['reviewText'].values
+y_game = game_data['polarity'].values
 
-# movie_pred = model.predict(list(X_movie))
-# game_pred = model.predict(list(X_game))
+movie_pred = model.predict(list(X_movie))
+game_pred = model.predict(list(X_game))
 # print('Exporting hidden game and movie predictions')
 
 # pd.DataFrame(movie_pred).to_csv("gr2_movie_pred.csv")
 # pd.DataFrame(game_pred).to_csv("gr2_game_pred.csv")
 # print('Exported!')
+
+game_labels = pd.read_csv('true_labels/true_game_labels.txt', sep="\n", header=None)
+game_labels = game_labels.values
+
+movie_labels = pd.read_csv('true_labels/true_movie_labels.txt', sep="\n", header=None)
+movie_labels = movie_labels.values
+
+print('Game Accuracy')
+print('  ',metrics.accuracy_score(game_labels, game_pred))
+
+
+print('Movie Accuracy')
+print('  ',metrics.accuracy_score(movie_labels, movie_pred))
