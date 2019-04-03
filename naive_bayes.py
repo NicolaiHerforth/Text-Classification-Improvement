@@ -15,15 +15,10 @@ test_data = data[round(len(data)*.8):]
 
 print('\t Converting data to dense OneHot encoding')
 corpus = one_hot.get_corpus(train_data)
-max_len = (data['reviewText'].map(len)).max()
-padding = 300
-
-train_data = one_hot.file_to_one_hot(train_data, corpus, pad_size= padding)
-val_data = one_hot.file_to_one_hot(val_data, corpus, test = True, pad_size= padding)
-test_data = one_hot.file_to_one_hot(test_data, corpus, test = True, pad_size= padding)
-
+train_data = one_hot.file_to_one_hot(train_data, corpus)
+val_data = one_hot.file_to_one_hot(val_data, corpus, test = True)
+test_data = one_hot.file_to_one_hot(test_data, corpus, test = True)
 print('\t Converted! ')
-
 
 
 X_train = train_data['reviewText'].values
@@ -35,16 +30,19 @@ y_val = (val_data['polarity']).values
 X_test = test_data['reviewText'].values
 y_test = test_data['polarity'].values
 
-clf = MultinomialNB()
-clf.fit(list(X_train), y_train)
+model = MultinomialNB()
+model.fit(list(X_train), y_train)
+
+
 print('Predicting Train')
-y_train_pred = clf.predict(list(X_train))
+y_train_pred = model.predict(list(X_train))
 print('Predicting Validation')
-y_val_pred = clf.predict(list(X_val))
+y_val_pred = model.predict(list(X_val))
 print('Predicting Test')
-y_test_pred = clf.predict(list(X_test))
+y_test_pred = model.predict(list(X_test))
 print('Done!')
 print()
+
 print('Training Accuracy')
 print('  ',metrics.accuracy_score(y_train, y_train_pred))
 
@@ -57,8 +55,8 @@ print('  ',metrics.accuracy_score(y_test, y_test_pred))
 # movie_data = formatting('phase1_movie_reviews-test-hidden.csv', prune = True)
 # game_data = formatting('phase1_video_games-test-hidden.csv', prune = True)
 
-# movie_data = one_hot.file_to_one_hot(movie_data, corpus, pad_size= padding)
-# game_data = one_hot.file_to_one_hot(game_data, corpus, test = True, pad_size= padding)
+# movie_data = one_hot.file_to_one_hot(movie_data, corpus, test = True)
+# game_data = one_hot.file_to_one_hot(game_data, corpus, test = True)
 
 # X_movie = movie_data['reviewText'].values
 # y_movie = movie_data['polarity'].values
@@ -66,8 +64,8 @@ print('  ',metrics.accuracy_score(y_test, y_test_pred))
 # X_game = game_data['reviewText'].values
 # y_game = game_data['polarity'].values
 
-# movie_pred = clf.predict(list(X_movie))
-# game_pred = clf.predict(list(X_game))
+# movie_pred = model.predict(list(X_movie))
+# game_pred = model.predict(list(X_game))
 # print('Exporting hidden game and movie predictions')
 
 # pd.DataFrame(movie_pred).to_csv("gr2_movie_pred.csv")
