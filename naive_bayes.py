@@ -7,7 +7,7 @@ import pandas as pd
 
 data = formatting('phase1_movie_reviews-train.csv', prune = True)
 data = data.sample(frac=1, random_state=1).reset_index(drop=True)
-data = data[:round(len(data)*0.1)]
+#data = data[:round(len(data)*0.1)]
 
 train_data = data[:round(len(data)*.6)]
 val_data = data[round(len(data)*.6):round(len(data)*.8)]
