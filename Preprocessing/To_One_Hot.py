@@ -1,36 +1,33 @@
-import pandas as pd
 from keras.preprocessing.text import text_to_word_sequence
 from collections import Counter
 
-def file_to_one_hot(data, test_data):
-    corpus = set()
-    data['summary'].apply(corpus.update)
-    data['reviewText'].apply(corpus.update)
 
-    # Below creates dixtionary of all words in corpus with values sorted by the frequency of the word.
-    # For example the most occuring word in corpus will be called 0, second most 1 and so on..
+def get_corpus(train_data):
+    corpus = Counter()
+    train_data['reviewText'].apply(corpus.update)
+    return corpus
+
+
+def file_to_one_hot(data, corpus, test = None):
     words_to_indices = dict()
-    for i, word in enumerate(sorted(corpus)):
-        words_to_indices[word] = i
+    count = 0
+    for word in sorted(corpus):
+        if corpus[word] > 50:
+            words_to_indices[word] = count
+            count += 1
 
-    def convert_list_to_ints(l):
-        for i in range(len(l)):
-            l[i] = words_to_indices[l[i]]
-        return l
 
     def convert_list_to_ints_for_test(l):
-        for i in range(len(l)):
-            if l[i] not in corpus:
-                l[i] = len(corpus)
+        ll = len(words_to_indices) * [0]
+
+        for i in l:
+            if i not in words_to_indices:
+                continue
             else:
-                l[i] = words_to_indices[l[i]]
-        return l
+                ll[words_to_indices[i]] = 1
 
+        return ll
 
-    test_data['summary'] = test_data['summary'].apply(convert_list_to_ints_for_test)
-    test_data['reviewText'] = test_data['reviewText'].apply(convert_list_to_ints_for_test)
+    data['reviewText'] = data['reviewText'].apply(convert_list_to_ints_for_test)
+    return data
 
-    data['summary'] = data['summary'].apply(convert_list_to_ints)
-    data['reviewText'] = data['reviewText'].apply(convert_list_to_ints)
-
-    return data, test_data
