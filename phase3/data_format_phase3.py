@@ -26,15 +26,9 @@ def formatting(path, test = False):
     def remove_pruned(words):
         return [word for word in words if word not in blacklist]
 
-    def print_head(df):
-        for _, row in df.head(5).iterrows():
-            print(row)
-
-
     data = pd.read_csv(path)
     data = data.fillna('')
 
-    data = data[:round(len(data)/10)]
 
     data["summary"] = data["summary"].astype(str)
     data['reviewText'] = data['reviewText'].astype(str)
@@ -62,9 +56,6 @@ def formatting(path, test = False):
 
     return data
 
-path = '../phase1_movie_reviews-train.csv'
-
-formatting(path)
 
 
 
