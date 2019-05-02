@@ -5,11 +5,13 @@ from nltk.corpus import stopwords
 import numpy as np
 from afinn_sentiment import avg_afinn_sentiment
 from afinn import Afinn
+from topic_modelling import add_topic_features
 
 
 
 def formatting(path, prune = False):
     af = Afinn()
+
 
     def get_words_to_prune(d, k = False):
 
@@ -29,6 +31,8 @@ def formatting(path, prune = False):
 
 
     data = pd.read_csv(path)
+    data = data.fillna('')
+
     data = data[:round(len(data)/10000)]
 
     print_head(data)
@@ -37,21 +41,21 @@ def formatting(path, prune = False):
     data['summary'] = data['summary'].apply(text_to_word_sequence)
     data['reviewText'] = data['reviewText'].apply(text_to_word_sequence)
 
-    #if prune:
-    #    blacklist = get_words_to_prune(data)
-    #    data['summary'] = data['summary'].apply(remove_pruned)
-    #    data['reviewText'] = data['reviewText'].apply(remove_pruned)
+    if prune:
+        blacklist = get_words_to_prune(data)
+        data['summary'] = data['summary'].apply(remove_pruned)
+        data['reviewText'] = data['reviewText'].apply(remove_pruned)
+
+
+    data = add_topic_features(data)
 
     def forward(smth):
         return avg_afinn_sentiment(smth,af)
 
-    #temp = data[reviewText]
-    print_head(data)
 
     data['affin_score'] = data['reviewText'].apply(forward)
 
     print_head(data)
-
 
     return data
 

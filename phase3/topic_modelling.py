@@ -16,6 +16,7 @@ def add_topic_features(data, test=False):
                         for synset in list(wn.all_synsets(wn.ADJ))])
 
         dataset = data
+        print(data['reviewText'].head())
         documents = dataset['reviewText']
         news_df = pd.DataFrame({'document': documents})
         news_df = news_df.fillna('')
@@ -23,6 +24,7 @@ def add_topic_features(data, test=False):
         # removing everything except alphabets`
         news_df['clean_doc'] = news_df['document'].str.replace("[^a-zA-Z#]", " ")
         # removing short words
+        print(news_df['clean_doc'].head(5))
         news_df['clean_doc'] = news_df['clean_doc'].apply(
             lambda x: ' '.join([w for w in x.split() if len(w) > 3]))
         # make all text lowercase
