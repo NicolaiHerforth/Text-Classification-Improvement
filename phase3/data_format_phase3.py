@@ -33,9 +33,9 @@ def formatting(path, prune = False):
     data = pd.read_csv(path)
     data = data.fillna('')
 
-    data = data[:round(len(data)/10000)]
+    data = data[:round(len(data)/10)]
 
-    print_head(data)
+
     data["summary"] = data["summary"].astype(str)
     data['reviewText'] = data['reviewText'].astype(str)
     data['summary'] = data['summary'].apply(text_to_word_sequence)
@@ -54,9 +54,7 @@ def formatting(path, prune = False):
 
 
     data['affin_score'] = data['reviewText'].apply(forward)
-
     print_head(data)
-
     return data
 
 path = '../phase1_movie_reviews-train.csv'
