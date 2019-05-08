@@ -64,7 +64,9 @@ def formatting(path, test = False):
     data['reviewText'] = data['reviewText'].apply(lemmatization)
     return data
 
-
+    fileObject = open('formatted_data.json','w')
+    pickle.dump(data,fileObject)   
+ 
 
 
 
