@@ -7,11 +7,16 @@ from afinn_sentiment import avg_afinn_sentiment
 from afinn import Afinn
 from topic_modelling import add_topic_features
 import pickle
+from nltk.stem import LancasterStemmer
+
+
 
 
 
 def formatting(path, test = False):
+
     af = Afinn()
+    lancaster=LancasterStemmer()
 
 
     def get_words_to_prune(d, k = False):
@@ -26,6 +31,10 @@ def formatting(path, test = False):
     def remove_pruned(words):
         return [word for word in words if word not in blacklist]
 
+    def lemmatization(sentence):
+        return [lancaster.stem(word) for word in sentence]
+
+    
     data = pd.read_csv(path)
     data = data.fillna('')
 
@@ -34,32 +43,30 @@ def formatting(path, test = False):
     data['reviewText'] = data['reviewText'].astype(str)
     data['summary'] = data['summary'].apply(text_to_word_sequence)
     data['reviewText'] = data['reviewText'].apply(text_to_word_sequence)
-    print(':o')
- 
+
+    data['reviewText'] = data['reviewText'] + data['summary']
+    data.drop('summary', axis = 1)
+
     if test:
         blacklist = pickle.load(open("blacklisted_words", "rb"))
     else:
         blacklist = get_words_to_prune(data)
         pickle.dump(blacklist, open("blacklisted_words", "wb" ))            
 
-    print('1')
-    data['summary'] = data['summary'].apply(remove_pruned)
     data['reviewText'] = data['reviewText'].apply(remove_pruned)
+
     data = add_topic_features(data)
 
     def forward(smth):
         return avg_afinn_sentiment(smth,af)
 
-    print('lel')
     data['affin_score'] = data['reviewText'].apply(forward)
-
-
+    data['reviewText'] = data['reviewText'].apply(lemmatization)
     return data
 
-
-
-
-
+    fileObject = open('formatted_data.json','w')
+    pickle.dump(data,fileObject)   
+ 
 
 
 
