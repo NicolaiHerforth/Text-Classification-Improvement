@@ -11,7 +11,9 @@ from nltk.corpus import stopwords
 pd.set_option("display.max_colwidth", 200)
 
 def add_topic_features(data, test=False):
+    print("Adding topic features")
     if not test:
+        print("Train set registered, computing sentiment and topics")
         adjectives = set([synset.name().split('.')[0]
                         for synset in list(wn.all_synsets(wn.ADJ))])
 
@@ -36,8 +38,7 @@ def add_topic_features(data, test=False):
 
         X = vectorizer.fit_transform(new_df['document'])
         # SVD represent documents and terms in vectors
-        svd_model = TruncatedSVD(
-            n_components=25, algorithm='randomized', n_iter=100, random_state=122)
+        svd_model = TruncatedSVD(n_components=25, algorithm='randomized', n_iter=100, random_state=122)
 
         svd_model.fit(X)
         terms = vectorizer.get_feature_names()
@@ -48,7 +49,8 @@ def add_topic_features(data, test=False):
             topics.append(sorted_terms[0][0])
 
         cleaned_topics = list(set(topics))
-    
+        print("Writing topics")
+        print(cleaned_topics)
         with open('topics.txt', 'w') as topic_file:
             for item in cleaned_topics:
                 topic_file.write(item + '\n')
@@ -56,19 +58,26 @@ def add_topic_features(data, test=False):
         df = data
         df = pd.concat([df,pd.DataFrame(columns = cleaned_topics)],sort=False)
         df = df.fillna(int(0))
-        i = 0
+        print("Adding topics to train")
+        print(cleaned_topics)
         for i, row in df.iterrows():
             intersect = set(row['reviewText']) & set(cleaned_topics)
             for word in intersect:
                 df.at[i,word] = 1
         return df
 
-    elif test == True:
+    else:
+        print("Test registered, writing topics to dataframe")
         cleaned_topics = []
+        print("Opening topic file")
         with open('topics.txt', 'r') as topic_file:
             for line in topic_file.readlines():
-                cleaned_topics.append(line)
-        df = pd.read_csv(data)
+                cleaned_topics.append(line.strip("\n"))
+        #print(data.head(2))
+        print("Adding test topics")
+        print(cleaned_topics)
+        
+        df = data
         df = pd.concat([df,pd.DataFrame(columns = cleaned_topics)],sort=False)
         df = df.fillna(int(0)) 
         for i, row in df.iterrows():

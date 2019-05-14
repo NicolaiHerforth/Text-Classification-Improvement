@@ -14,7 +14,7 @@ from nltk.stem import LancasterStemmer
 
 
 def formatting(path, test = False):
-
+ 
     af = Afinn()
     lancaster=LancasterStemmer()
 
@@ -55,18 +55,20 @@ def formatting(path, test = False):
 
     data['reviewText'] = data['reviewText'].apply(remove_pruned)
 
-    data = add_topic_features(data)
-
+    if test:
+        data = add_topic_features(data, test=True)
+    else:
+        data = add_topic_features(data)
     def forward(smth):
         return avg_afinn_sentiment(smth,af)
 
     data['affin_score'] = data['reviewText'].apply(forward)
-    data['reviewText'] = data['reviewText'].apply(lemmatization)
-    return data
-
-    fileObject = open('formatted_data','w')
-    pickle.dump(data,fileObject)
- 
-
+    # data['reviewText'] = data['reviewText'].apply(lemmatization)
+    if test: 
+        return data
+    else:
+        fileObject = open('fomatted_data','wb')
+        pickle.dump(data,fileObject)
+        return data
 
 
