@@ -4,7 +4,7 @@ from afinn import Afinn
 def avg_afinn_sentiment(sentence, af):
     negations = set(['not', 'dont'])
     first = True
-    print(sentence)
+
     new_sent = []
 
     for i,w in enumerate(sentence):
@@ -17,8 +17,10 @@ def avg_afinn_sentiment(sentence, af):
                 new_sent[-1] = -new_sent[-1]
 
     
-    
-    return sum(new_sent)/len(new_sent)
+    if len(new_sent) == 0:
+        return 0
+    else:
+        return sum(new_sent)/len(new_sent)
 
 
 

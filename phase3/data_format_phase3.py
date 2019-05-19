@@ -5,11 +5,19 @@ from nltk.corpus import stopwords
 import numpy as np
 from afinn_sentiment import avg_afinn_sentiment
 from afinn import Afinn
+from topic_modelling import add_topic_features
+import pickle
+from nltk.stem import LancasterStemmer
 
 
 
-def formatting(path, prune = False):
+
+
+def formatting(path, test = False):
+ 
     af = Afinn()
+    lancaster=LancasterStemmer()
+
 
     def get_words_to_prune(d, k = False):
 
@@ -23,45 +31,44 @@ def formatting(path, prune = False):
     def remove_pruned(words):
         return [word for word in words if word not in blacklist]
 
-    def print_head(df):
-        for _, row in df.head(5).iterrows():
-            print(row)
+    def lemmatization(sentence):
+        return [lancaster.stem(word) for word in sentence]
 
-
+    
     data = pd.read_csv(path)
-    data = data[:round(len(data)/10000)]
+    data = data.fillna('')
 
-    print_head(data)
+
     data["summary"] = data["summary"].astype(str)
     data['reviewText'] = data['reviewText'].astype(str)
     data['summary'] = data['summary'].apply(text_to_word_sequence)
     data['reviewText'] = data['reviewText'].apply(text_to_word_sequence)
 
-    #if prune:
-    #    blacklist = get_words_to_prune(data)
-    #    data['summary'] = data['summary'].apply(remove_pruned)
-    #    data['reviewText'] = data['reviewText'].apply(remove_pruned)
+    data['reviewText'] = data['reviewText'] + data['summary']
+    data.drop('summary', axis = 1)
 
+    if test:
+        blacklist = pickle.load(open("blacklisted_words", "rb"))
+    else:
+        blacklist = get_words_to_prune(data)
+        pickle.dump(blacklist, open("blacklisted_words", "wb" ))            
+
+    data['reviewText'] = data['reviewText'].apply(remove_pruned)
+
+    if test:
+        data = add_topic_features(data, test=True)
+    else:
+        data = add_topic_features(data)
     def forward(smth):
         return avg_afinn_sentiment(smth,af)
 
-    #temp = data[reviewText]
-    print_head(data)
-
     data['affin_score'] = data['reviewText'].apply(forward)
-
-    print_head(data)
-
-
-    return data
-
-path = '../phase1_movie_reviews-train.csv'
-
-formatting(path)
-
-
-
-
-
+    # data['reviewText'] = data['reviewText'].apply(lemmatization)
+    if test: 
+        return data
+    else:
+        fileObject = open('fomatted_data','wb')
+        pickle.dump(data,fileObject)
+        return data
 
 
