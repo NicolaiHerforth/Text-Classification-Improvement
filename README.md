@@ -8,8 +8,10 @@
 
 - Sentence level Model can be accessed in sentenceLevel_model.py, the code trains and benchmarks the model in a cross valuation setup, 1 group against all. 
 
-- GRU All Features = plotting_predicting_func_gru_model_h5.ipynb
+- The GRU All Features results can be accessed in the folder phase3 by running plotting_predicting_func_gru_model_h5.py, this model uses all features
 
-- GRU Reviewtext & Topics = plotting_predicting_func_gru_model_ablation_no_afinn.ipynb
-- GRU Topics & Afinn = plotting_predicting_funct_GRU_model_ablation_no_text.ipynb
-- GRU ReviewText & Afinn = plotting_predicting_funct_GRU_model_ablation_no_topics.ipynb
+- The GRU Reviewtext & Topics results can be accessed in the folder phase3 by running plotting_predicting_func_gru_model_ablation_no_afinn.py this model uses reviewText and topics as features
+
+- The GRU Topics & Afinn results can be accessed in the folder phase3 by running  plotting_predicting_funct_GRU_model_ablation_no_text.py this model uses topics and afinn scores as features
+
+- The GRU ReviewText & Afinn results can be accessed in the folder phase3 by running plotting_predicting_funct_GRU_model_ablation_no_topics.py this model uses reviewText and afinn scores as features
