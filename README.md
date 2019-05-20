@@ -8,8 +8,8 @@
 
 - Sentence level Model can be accessed in sentenceLevel_model.py, the code trains and benchmarks the model in a cross valuation setup, 1 group against all. 
 
-- GRU All Features
+- GRU All Features = plotting_predicting_func_gru_model_h5.ipynb
 
-- GRU Reviewtext & Topics
-- GRU Topics & Afinn
-- GRU ReviewText & Afinn
+- GRU Reviewtext & Topics = plotting_predicting_func_gru_model_ablation_no_afinn.ipynb
+- GRU Topics & Afinn = plotting_predicting_funct_GRU_model_ablation_no_text.ipynb
+- GRU ReviewText & Afinn = plotting_predicting_funct_GRU_model_ablation_no_topics.ipynb
