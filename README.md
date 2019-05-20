@@ -8,3 +8,8 @@
 
 - Sentence level Model can be accessed in sentenceLevel_model.py, the code trains and benchmarks the model in a cross valuation setup, 1 group against all. 
 
+- GRU All Features
+
+- GRU Reviewtext & Topics
+- GRU Topics & Afinn
+- GRU ReviewText & Afinn
