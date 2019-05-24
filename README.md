@@ -1,5 +1,7 @@
 # Group 2 exam project.
 
+Link for the trained GRU models: https://drive.google.com/drive/folders/1S6CqGbuYQf4yR_ez5VkfwsmqPKJc9BmR?usp=sharing
+
 ## Instructions for reproducing the resulsts in the paper:
 
 - The Flair model can be trained running flair_model.py (Note that this takes a long time). The trained model used in the paper can be loaded via flair_model_predict.py (This also takes a long time).
@@ -15,3 +17,4 @@
 - The GRU Topics & Afinn results can be accessed in the folder phase3 by running  plotting_predicting_funct_GRU_model_ablation_no_text.py this model uses topics and afinn scores as features
 
 - The GRU ReviewText & Afinn results can be accessed in the folder phase3 by running plotting_predicting_funct_GRU_model_ablation_no_topics.py this model uses reviewText and afinn scores as features
+
